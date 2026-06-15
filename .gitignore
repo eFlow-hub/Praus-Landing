@@ -1,0 +1,13 @@
+# Ferramentas locais / preview
+.claude/
+
+# Lixo de SO
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+*.swp

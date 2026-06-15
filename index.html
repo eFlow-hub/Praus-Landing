@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PRAUS — Skill-based matchmaking. Jogue valendo.</title>
+<meta name="description" content="A PRAUS é a infraestrutura de skill-based matchmaking do Brasil. Escolhe o jogo, encontra rival do seu nível, dispute o pote e recebe no PIX. Garanta seu acesso ao beta." />
+<meta name="theme-color" content="#14110F" />
+
+<meta property="og:title" content="PRAUS — Jogue valendo." />
+<meta property="og:description" content="Skill-based matchmaking brasileiro. Sua habilidade vira dinheiro, com árbitro ao vivo, escrow e PIX." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a href="#top" class="wordmark" aria-label="PRAUS">PRAUS</a>
+    <nav class="nav__menu" aria-label="Principal">
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#jogos">Jogos</a>
+      <a href="#lances">Lances</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#waitlist" class="btn btn--sm btn--primary nav__cta">ENTRAR NA FILA <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ 1. HERÓI (vídeo de fundo, sem fosco) ============ -->
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <video class="hero__vid hero__vid--a" autoplay muted loop playsinline preload="auto">
+      <source src="assets/video/hero-1.mp4" type="video/mp4" />
+    </video>
+    <video class="hero__vid hero__vid--b" autoplay muted loop playsinline preload="auto">
+      <source src="assets/video/hero-2.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__scrim"></div>
+  </div>
+
+  <div class="wrap hero__inner">
+    <span class="kicker mono-tag reveal">BETA · SKILL-BASED MATCHMAKING · BRASIL</span>
+
+    <h1 class="hero__title reveal">
+      AQUI A SUA <em>skill</em><br />
+      VALE DINHEIRO.
+    </h1>
+
+    <p class="hero__sub reveal">
+      A PRAUS é a infraestrutura de skill-based matchmaking do Brasil.
+      Escolhe o jogo, encontra rival do seu nível, dispute o pote e
+      recebe no PIX — com árbitro ao vivo em cada partida.
+    </p>
+
+    <form class="waitlist reveal" id="hero-form" novalidate>
+      <div class="waitlist__field">
+        <input type="email" name="email" inputmode="email" autocomplete="email"
+               placeholder="seu@email.com" aria-label="Seu e-mail" required />
+        <button type="submit" class="btn btn--primary">
+          GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
+      <p class="waitlist__success" role="status" hidden>
+        Você está na fila. A gente chama quando o beta abrir pra você.
+      </p>
+    </form>
+  </div>
+
+  <a href="#diferenciais" class="hero__scroll mono-tag" aria-label="Rolar para o conteúdo">SCROLL ↓</a>
+</section>
+
+<!-- ============ 2. DIFERENCIAIS (proposta de valor) ============ -->
+<section class="section" id="diferenciais">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">01 / POR QUE PRAUS</span>
+      <h2 class="section__title">NOVA NO CENÁRIO. <em>séria</em> NO JOGO.</h2>
+      <p class="section__lead">
+        Skill-based matchmaking não é promessa nova — entregar com
+        segurança, multi-game e pagamento na hora é o que faltava no
+        Brasil. A PRAUS chega para ocupar esse espaço.
+      </p>
+    </header>
+
+    <div class="feats">
+      <!-- Tile HUD — mini-painel de partida ao vivo -->
+      <article class="feat feat--hud card reveal">
+        <div class="hud">
+          <div class="hud__top">
+            <span class="hud__live mono-tag"><i></i>AO VIVO</span>
+            <span class="hud__id mono-tag">MATCH #A8F2</span>
+          </div>
+
+          <div class="hud__timer">
+            <span class="hud__timer-num">00:42</span>
+            <span class="hud__timer-label mono-tag">TEMPO ATÉ O MATCH</span>
+          </div>
+
+          <div class="hud__line">
+            <span class="hud__line-label mono-tag">PRIZE POOL</span>
+            <span class="hud__line-val">R$ 1.250 <em class="hud__pix">→ PIX</em></span>
+          </div>
+          <div class="hud__bar" aria-hidden="true"><span></span></div>
+          <span class="hud__escrow mono-tag">ESCROW · LIBERA NO PIX APÓS VALIDAÇÃO</span>
+        </div>
+        <div class="feat__foot">
+          <h3 class="feat__title">Partida real, dinheiro garantido</h3>
+          <p class="feat__body">Árbitro humano ao vivo em cada match e prize pool em escrow até validar. O que você vê é o produto.</p>
+        </div>
+      </article>
+
+      <!-- Cards limpos -->
+      <article class="feat card reveal">
+        <span class="feat__idx mono-tag">D1</span>
+        <h3 class="feat__title">Pareamento por habilidade</h3>
+        <p class="feat__body">Você joga contra quem está no seu nível. O resultado vem da skill — não do azar.</p>
+      </article>
+      <article class="feat card reveal">
+        <span class="feat__idx mono-tag">D2</span>
+        <h3 class="feat__title">Multi-game de largada</h3>
+        <p class="feat__body">Não é plataforma de um título só. É o portfólio que o Brasil joga, e crescendo.</p>
+      </article>
+      <article class="feat card reveal">
+        <span class="feat__idx mono-tag">D3</span>
+        <h3 class="feat__title">PIX na hora</h3>
+        <p class="feat__body">Resultado validado, prêmio direto na conta. Sem fila de saque, sem intermediário.</p>
+      </article>
+      <article class="feat card reveal">
+        <span class="feat__idx mono-tag">D4</span>
+        <h3 class="feat__title">Brasil-first</h3>
+        <p class="feat__body">PT-BR, servidor BR, KYC nacional e os jogos que a gente joga aqui.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. COMO FUNCIONA ============ -->
+<section class="section section--alt" id="como-funciona">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">02 / COMO FUNCIONA</span>
+      <h2 class="section__title">TRÊS PASSOS. <em>quarenta</em> SEGUNDOS.</h2>
+    </header>
+
+    <div class="flow reveal" data-autoplay="4800">
+      <!-- Passos (controles) -->
+      <div class="flow__steps" role="tablist" aria-label="Como funciona">
+        <button class="flow__step is-active" role="tab" aria-selected="true" aria-controls="screen-1" id="step-1" data-step="1">
+          <span class="flow__step-num">01</span>
+          <span class="flow__step-text">
+            <span class="flow__step-tt">Escolhe o jogo e o entry fee</span>
+            <span class="flow__step-desc">Define a modalidade e quanto coloca na linha. Entra na fila e o sistema acha rival do seu nível.</span>
+          </span>
+          <span class="flow__step-bar" aria-hidden="true"><i></i></span>
+        </button>
+
+        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-2" id="step-2" data-step="2">
+          <span class="flow__step-num">02</span>
+          <span class="flow__step-text">
+            <span class="flow__step-tt">Compete com árbitro ao vivo</span>
+            <span class="flow__step-desc">A partida roda com um árbitro humano acompanhando em tempo real. Quem joga melhor leva o pote.</span>
+          </span>
+          <span class="flow__step-bar" aria-hidden="true"><i></i></span>
+        </button>
+
+        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-3" id="step-3" data-step="3">
+          <span class="flow__step-num">03</span>
+          <span class="flow__step-text">
+            <span class="flow__step-tt">Recebe o prize pool no PIX</span>
+            <span class="flow__step-desc">Resultado validado, o prize pool cai na sua conta via PIX. Sem burocracia, sem espera.</span>
+          </span>
+          <span class="flow__step-bar" aria-hidden="true"><i></i></span>
+        </button>
+      </div>
+
+      <!-- Prévia das telas -->
+      <div class="flow__screens">
+        <!-- TELA 1 — lobby / escolha -->
+        <div class="screen is-active" id="screen-1" role="tabpanel" aria-labelledby="step-1" data-screen="1">
+          <div class="screen__bar mono-tag"><span>PRAUS · LOBBY</span><span>BR-SE</span></div>
+          <div class="screen__body">
+            <span class="screen__label mono-tag">MODALIDADE</span>
+            <div class="chips">
+              <button class="chip chip--on" type="button" tabindex="-1">CS2</button>
+              <button class="chip" type="button" tabindex="-1">DOTA 2</button>
+            </div>
+            <span class="screen__label mono-tag">ENTRY FEE</span>
+            <div class="chips">
+              <button class="chip" type="button" tabindex="-1">R$ 25</button>
+              <button class="chip chip--on" type="button" tabindex="-1">R$ 50</button>
+              <button class="chip" type="button" tabindex="-1">R$ 100</button>
+            </div>
+            <div class="screen__row">
+              <span class="screen__label mono-tag">PRIZE POOL ESTIMADO</span>
+              <span class="screen__money">R$ 95</span>
+            </div>
+            <div class="screen__cta">ENTRAR NA FILA →</div>
+          </div>
+        </div>
+
+        <!-- TELA 2 — partida ao vivo -->
+        <div class="screen" id="screen-2" role="tabpanel" aria-labelledby="step-2" data-screen="2" hidden>
+          <div class="screen__bar mono-tag"><span class="screen__live"><i></i>AO VIVO</span><span>MATCH #A8F2</span></div>
+          <div class="screen__body">
+            <div class="screen__score">
+              <div class="screen__team"><span class="screen__team-tag mono-tag">VOCÊ</span><span class="screen__team-pts">07</span></div>
+              <span class="screen__score-x">—</span>
+              <div class="screen__team"><span class="screen__team-tag mono-tag">RIVAL</span><span class="screen__team-pts">05</span></div>
+            </div>
+            <div class="screen__ref">
+              <span class="screen__ref-dot" aria-hidden="true"></span>
+              <span class="screen__ref-txt">Árbitro PRAUS acompanhando ao vivo</span>
+            </div>
+            <div class="screen__row">
+              <span class="screen__label mono-tag">EM ESCROW</span>
+              <span class="screen__money">R$ 95</span>
+            </div>
+            <div class="screen__timer mono-tag">TEMPO DE PARTIDA <b>12:08</b></div>
+          </div>
+        </div>
+
+        <!-- TELA 3 — recebido no PIX -->
+        <div class="screen" id="screen-3" role="tabpanel" aria-labelledby="step-3" data-screen="3" hidden>
+          <div class="screen__bar mono-tag"><span class="screen__win">● VALIDADO</span><span>MATCH #A8F2</span></div>
+          <div class="screen__body screen__body--center">
+            <div class="screen__check" aria-hidden="true">✓</div>
+            <span class="screen__win-tt">VITÓRIA</span>
+            <span class="screen__money screen__money--xl">R$ 95</span>
+            <div class="screen__pix mono-tag">PAGO VIA PIX · AGORA</div>
+            <div class="screen__elo mono-tag">+24 ELO · GOLD III</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. JOGOS ============ -->
+<section class="section" id="jogos">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">03 / MODALIDADES</span>
+      <h2 class="section__title">COMECE A JOGAR <em>valendo.</em></h2>
+      <p class="section__lead">
+        CS2 e Dota 2 ativos no beta. Valorant e Fortnite chegando. O
+        catálogo abre conforme a base cresce.
+      </p>
+    </header>
+
+    <div class="games">
+      <!-- ATIVOS -->
+      <article class="game card reveal" style="--accent:#f0a020">
+        <div class="game__cover">
+          <img src="assets/games/cs2.jpg" alt="Counter-Strike 2" loading="lazy" />
+          <span class="badge badge--live mono-tag">ATIVO</span>
+        </div>
+        <div class="game__meta">
+          <h3 class="game__name">COUNTER-STRIKE 2</h3>
+          <p class="game__mode mono-tag">5V5 · COMPETITIVO</p>
+        </div>
+      </article>
+
+      <article class="game card reveal" style="--accent:#c0392b">
+        <div class="game__cover">
+          <img src="assets/games/dota2.jpg" alt="Dota 2" loading="lazy" />
+          <span class="badge badge--live mono-tag">ATIVO</span>
+        </div>
+        <div class="game__meta">
+          <h3 class="game__name">DOTA 2</h3>
+          <p class="game__mode mono-tag">5V5 · RANKED</p>
+        </div>
+      </article>
+
+      <!-- EM BREVE -->
+      <article class="game game--soon card reveal" style="--accent:#ff4655">
+        <div class="game__cover">
+          <img src="assets/games/valorant.jpg" alt="Valorant" loading="lazy" />
+          <span class="badge badge--soon mono-tag">EM BREVE</span>
+        </div>
+        <div class="game__meta">
+          <h3 class="game__name">VALORANT</h3>
+          <p class="game__mode mono-tag">CHEGANDO</p>
+        </div>
+      </article>
+
+      <article class="game game--soon card reveal" style="--accent:#4a90e2">
+        <div class="game__cover">
+          <img src="assets/games/fortnite.jpg" alt="Fortnite" loading="lazy" />
+          <span class="badge badge--soon mono-tag">EM BREVE</span>
+        </div>
+        <div class="game__meta">
+          <h3 class="game__name">FORTNITE</h3>
+          <p class="game__mode mono-tag">CHEGANDO</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. LANCES (clipes de campeonato) ============ -->
+<section class="section section--alt" id="lances">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">04 / LANCES</span>
+      <h2 class="section__title">O CLUTCH QUE VALE O <em>pote.</em></h2>
+      <p class="section__lead">
+        O nível que decide campeonato é o mesmo que você vai disputar.
+        Lances de competição profissional de Valorant para entrar no clima.
+      </p>
+    </header>
+
+    <div class="clip reveal">
+      <div class="clip__frame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/Jvc2PRdAEJc?rel=0&modestbranding=1&playsinline=1"
+          title="Lances de campeonato — Valorant"
+          loading="lazy"
+          allow="accelerated-performance; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <p class="clip__cap mono-tag">VALORANT CHAMPIONS · TOP PLAYS</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. SEGURANÇA / CREDIBILIDADE ============ -->
+<section class="section" id="seguranca">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">05 / SEGURANÇA E INTEGRIDADE</span>
+      <h2 class="section__title">O DINHEIRO É SEU. A ESTRUTURA TAMBÉM.</h2>
+      <p class="section__lead">
+        Competir vale a pena quando o resultado é justo e o pagamento é
+        garantido. KYC, escrow e arbitragem humana em cada partida — com
+        parceiros que dão lastro técnico e legal.
+      </p>
+    </header>
+
+    <div class="partners reveal">
+      <div class="partner">
+        <span class="partner__name">Asaas</span>
+        <span class="partner__role">PIX e escrow</span>
+      </div>
+      <div class="partner">
+        <span class="partner__name">Idwall</span>
+        <span class="partner__role">KYC automático</span>
+      </div>
+      <div class="partner">
+        <span class="partner__name">Árbitro PRAUS</span>
+        <span class="partner__role">Arbitragem humana ao vivo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. NÚMEROS / DIMENSÃO ============ -->
+<section class="section section--alt" id="dimensao">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">06 / DIMENSÃO</span>
+      <h2 class="section__title">UM MERCADO QUE JÁ EXISTE.</h2>
+    </header>
+
+    <div class="stats">
+      <div class="stat reveal">
+        <span class="stat__num">103M+</span>
+        <span class="stat__desc">gamers no Brasil</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat__num">65M</span>
+        <span class="stat__desc">ativos nos jogos do portfólio</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat__num">US$ 30 bi</span>
+        <span class="stat__desc">mercado global de skill-based gaming, crescendo 20% ao ano</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat__num">R$ 8 bi</span>
+        <span class="stat__desc">disponíveis no Brasil</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap wrap--narrow">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">07 / PERGUNTAS DIRETAS</span>
+      <h2 class="section__title">SEM RODEIO.</h2>
+    </header>
+
+    <div class="faq reveal">
+      <details class="faq__item">
+        <summary class="faq__q">Isso é aposta?</summary>
+        <p class="faq__a">Não. A PRAUS é skill-based matchmaking: o resultado vem da sua habilidade, não da sorte. Tudo roda dentro de uma estrutura legal completa, com regras claras e arbitragem em cada partida.</p>
+      </details>
+      <details class="faq__item">
+        <summary class="faq__q">É seguro colocar dinheiro?</summary>
+        <p class="faq__a">É. Tem KYC e escrow nativos: a verificação de identidade é automática e o valor fica retido em escrow até o resultado ser validado. Só então o prize pool é liberado no PIX.</p>
+      </details>
+      <details class="faq__item">
+        <summary class="faq__q">Como vocês evitam cheater?</summary>
+        <p class="faq__a">Cada partida tem um árbitro humano da PRAUS acompanhando ao vivo. Comportamento suspeito é avaliado na hora, e o pagamento só sai depois da validação do resultado.</p>
+      </details>
+      <details class="faq__item">
+        <summary class="faq__q">Quais jogos posso disputar?</summary>
+        <p class="faq__a">No beta, CS2 e Dota 2 entram ativos. Valorant e Fortnite estão chegando, e o catálogo cresce conforme a base aumenta.</p>
+      </details>
+      <details class="faq__item">
+        <summary class="faq__q">Quando o beta abre?</summary>
+        <p class="faq__a">Estamos em pré-launch e liberando acesso por fila. Quem entra agora na waitlist é avisado primeiro.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. CTA FINAL ============ -->
+<section class="cta-final" id="waitlist">
+  <div class="cta-final__glow" aria-hidden="true"></div>
+  <div class="wrap cta-final__inner">
+    <span class="kicker mono-tag reveal">FILA ABERTA · VAGAS DO BETA</span>
+    <h2 class="cta-final__title reveal">PRESS START.<br /><em>play</em> PRAUS.</h2>
+    <p class="cta-final__sub reveal">
+      Garanta seu acesso ao beta. Quando abrir pra você, é só escolher o
+      jogo e disputar o pote.
+    </p>
+
+    <form class="waitlist waitlist--center reveal" id="footer-form" novalidate>
+      <div class="waitlist__field">
+        <input type="email" name="email" inputmode="email" autocomplete="email"
+               placeholder="seu@email.com" aria-label="Seu e-mail" required />
+        <button type="submit" class="btn btn--primary">
+          GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
+      <p class="waitlist__success" role="status" hidden>
+        Você está na fila. A gente chama quando o beta abrir pra você.
+      </p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <span class="wordmark wordmark--footer">PRAUS</span>
+      <p class="footer__tagline mono-tag">PRESS START. PLAY PRAUS.</p>
+    </div>
+    <nav class="footer__links" aria-label="Documentos">
+      <a href="#" class="footer__link">Termos de Uso</a>
+      <a href="#" class="footer__link">Regras da Plataforma</a>
+      <a href="#" class="footer__link">Política de Privacidade</a>
+    </nav>
+    <p class="footer__note">
+      Documentos disponibilizados como minuta em consolidação — versões em
+      ajuste, não finais. Jogo responsável · idade mínima conforme
+      regulamento em consolidação.
+    </p>
+    <p class="footer__copy mono-tag">© 2026 PRAUS · SKILL-BASED MATCHMAKING · BRASIL</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
