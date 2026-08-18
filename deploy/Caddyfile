@@ -1,0 +1,36 @@
+# PRAUS — Caddyfile da plataforma COM a landing no apex.
+#
+# Este arquivo substitui /home/praus/praus/infra/Caddyfile.
+# Mudanças em relação ao original (apenas duas):
+#   1. o apex passa a apontar para o serviço `landing`;
+#   2. o player-web ganha `app.{$PRAUS_DOMAIN}` — continua no ar, muda de
+#      endereço em vez de sair do ar.
+#
+# A regra do bloco é respeitada: nenhum domínio codificado, tudo por
+# {$PRAUS_DOMAIN}. Trocar homolog→prod continua sendo trocar a variável.
+#
+# O container `landing` vive noutro compose (praus-landing) e entra nesta
+# mesma rede; por isso o Caddy o alcança pelo nome.
+{
+	email {$ACME_EMAIL}
+}
+
+{$PRAUS_DOMAIN} {
+	encode gzip
+	reverse_proxy landing:4100
+}
+
+app.{$PRAUS_DOMAIN} {
+	encode gzip
+	reverse_proxy player-web:3000
+}
+
+api.{$PRAUS_DOMAIN} {
+	encode gzip
+	reverse_proxy api:4000
+}
+
+staff.{$PRAUS_DOMAIN} {
+	encode gzip
+	reverse_proxy staff-web:3000
+}

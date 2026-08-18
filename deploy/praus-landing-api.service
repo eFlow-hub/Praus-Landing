@@ -1,0 +1,40 @@
+# systemd unit da API da waitlist
+#
+#   sudo cp deploy/praus-landing-api.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now praus-landing-api
+#   sudo systemctl status praus-landing-api
+#   journalctl -u praus-landing-api -f
+
+[Unit]
+Description=PRAUS landing — API da waitlist
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/praus-landing/server
+EnvironmentFile=/var/www/praus-landing/server/.env
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=5
+
+# Endurecimento — o serviço só precisa ler o próprio diretório e falar na rede
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/praus-landing/server
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryMax=256M
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=praus-api
+
+[Install]
+WantedBy=multi-user.target

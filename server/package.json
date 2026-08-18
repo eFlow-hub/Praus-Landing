@@ -1,0 +1,21 @@
+{
+  "name": "praus-landing-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API da waitlist da landing PRAUS — grava o e-mail no Postgres e notifica por Resend",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "dev:site": "node dev-server.js",
+    "migrate": "node src/migrate.js",
+    "export": "node src/export-cli.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "pg": "^8.16.3"
+  }
+}

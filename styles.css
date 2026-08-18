@@ -54,6 +54,31 @@ ul,ol { list-style: none; }
 a { color: inherit; text-decoration: none; }
 ::selection { background: var(--orange); color: #000; }
 
+/* ---------- Barra de rolagem: só o polegar laranja, sem trilho ----------
+   Os dois caminhos são exclusivos de propósito: o Chrome dá precedência a
+   scrollbar-color sobre as regras ::-webkit-, e por aquele caminho não há
+   como esconder as setas das pontas. Isolando cada motor, o Chrome/Safari
+   usa ::-webkit- (controle total) e o Firefox usa a propriedade padrão. */
+@supports not selector(::-webkit-scrollbar) {
+  :root {
+    scrollbar-width: thin;
+    scrollbar-color: var(--orange) transparent;
+  }
+}
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar { width: 12px; height: 12px; }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner { background: transparent; }
+  ::-webkit-scrollbar-button { display: none; }   /* mata as setas das pontas */
+  ::-webkit-scrollbar-thumb {
+    background: var(--orange);
+    /* borda transparente + clip no padding afina a barra sem pintar trilho */
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--orange-hot); }
+}
+
 /* ---------- Layout ---------- */
 .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 22px; }
 .wrap--narrow { max-width: 760px; }
@@ -85,12 +110,21 @@ em {
   letter-spacing: -0.01em;
 }
 
-/* ---------- Wordmark (placeholder textual, DNA stencil) ---------- */
+/* ---------- Wordmark (letreiro stencil + marca do cavalo) ---------- */
 .wordmark {
-  font-family: var(--f-hero);
-  font-size: 22px; letter-spacing: 0.26em; text-transform: uppercase;
-  color: var(--ink); padding-left: 0.26em; line-height: 1;
+  display: inline-flex; align-items: center; gap: 0.38em;
+  font-size: 22px; line-height: 1; color: var(--ink);
 }
+.wordmark__mark { height: 1.45em; width: auto; flex: none; }
+.wordmark__text {
+  font-family: var(--f-hero); font-size: 1em;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  /* o letter-spacing deixa um vão fantasma depois do "S"; cancelar faz o
+     gap acima ser o espaçamento real entre o letreiro e a marca */
+  margin-right: -0.26em;
+}
+/* respiro vertical dá ao link da nav um alvo de toque confortável */
+.nav .wordmark { padding-block: 8px; }
 .wordmark--footer { font-size: 34px; }
 
 /* ---------- Botões (chanfros, mono uppercase) ---------- */
@@ -202,6 +236,33 @@ em {
 .waitlist--center .waitlist__micro { text-align: center; }
 .waitlist__success { font-family: var(--f-ui); font-size: 15px; font-weight: 600; color: var(--win); margin-top: 16px; }
 .waitlist--center .waitlist__success { text-align: center; }
+.waitlist__error { font-family: var(--f-ui); font-size: 14px; font-weight: 500; color: var(--loss); margin-top: 12px; }
+.waitlist--center .waitlist__error { text-align: center; }
+/* [hidden] do UA perde para o display:flex acima — sem isto o formulário
+   continua na tela depois do envio, com a mensagem de sucesso ao lado. */
+.waitlist__field[hidden] { display: none; }
+.btn[disabled] { opacity: .55; cursor: progress; }
+.btn[disabled]:hover { background: var(--orange); box-shadow: none; }
+
+/* ---- Vagas esgotadas ---- */
+/* Cinza inerte: sem laranja, sem brilho, sem reação ao hover. Vence os
+   estados de :hover/[disabled] acima, por isso vem depois e repete o seletor. */
+.btn--esgotado,
+.btn--esgotado:hover,
+.btn--esgotado:active,
+.btn[disabled].btn--esgotado,
+.btn[disabled].btn--esgotado:hover {
+  background: #3A332D;
+  color: #CFC7BF;          /* 7,4:1 sobre o cinza — continua legível */
+  box-shadow: none;
+  opacity: 1;
+  cursor: not-allowed;
+  transform: none;
+}
+.waitlist input[disabled] {
+  opacity: .6;
+  cursor: not-allowed;
+}
 
 /* ============================================================
    Cabeçalho de seção
@@ -414,6 +475,89 @@ em {
 .game--soon .game__name { color: var(--ink-3); }
 
 /* ============================================================
+   4b. RANKING (leaderboard)
+   ============================================================ */
+/* #jogos e #ranking têm o mesmo fundo; a divisória faz a separação —
+   mesmo recurso que .cta-final já usa. */
+.section--edge { border-top: 1px solid var(--line); }
+
+.rank {
+  --c: 12px;
+  background: linear-gradient(180deg, var(--bg-3), var(--bg));
+  border: 1px solid var(--line); overflow: hidden;
+  box-shadow: 0 0 50px rgba(0,0,0,.35);
+  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
+}
+.rank__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 18px; background: rgba(13,11,10,.5);
+  border-bottom: 1px solid var(--line); color: var(--ink-3); letter-spacing: .14em;
+}
+
+/* ---- Abas Jogadores / Times ---- */
+.rank__tabs { display: flex; border-bottom: 1px solid var(--line); }
+.rank__tab {
+  flex: 1; position: relative; background: transparent; border: 0; cursor: pointer;
+  font-family: var(--f-mono); font-size: 12px; font-weight: 700; letter-spacing: .12em;
+  color: var(--ink-3); padding: 15px 12px;
+  transition: color .15s ease, background-color .15s ease;
+}
+.rank__tab:hover { color: var(--ink); }
+.rank__tab.is-active { color: var(--ink); background: rgba(255,122,0,.06); }
+.rank__tab.is-active::after {
+  content: ""; position: absolute; inset: auto 0 -1px 0; height: 2px; background: var(--orange);
+}
+/* [hidden] do UA perde para qualquer display de autor — declarar explicitamente */
+.rank__panel[hidden] { display: none; }
+
+/* ---- Tabela ---- */
+.rank__table { width: 100%; border-collapse: collapse; }
+.rank__cap {
+  caption-side: bottom; text-align: left; color: var(--ink-3);
+  padding: 13px 18px; border-top: 1px solid var(--line); letter-spacing: .1em;
+}
+.rank__table th {
+  font-family: var(--f-tag); font-size: 10px; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ink-3); text-align: left;
+  padding: 12px 18px; border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+.rank__table td { padding: 12px 18px; border-bottom: 1px solid rgba(42,35,30,.5); }
+.rank__table tbody tr:last-child td { border-bottom: 0; }
+.rank__table tbody tr { transition: background-color .15s ease; }
+.rank__table tbody tr:hover { background: rgba(255,122,0,.05); }
+
+.rank__pos {
+  font-family: var(--f-num); font-size: 21px; color: var(--ink-3);
+  width: 1%; white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.rank__table tbody tr:nth-child(-n+3) .rank__pos { color: var(--orange); }
+.rank__nick { font-family: var(--f-ui); font-weight: 600; font-size: 15px; color: var(--ink); }
+.rank__tier {
+  font-family: var(--f-tag); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
+}
+.rank__table th:last-child, .rank__elo { text-align: right; }
+.rank__elo {
+  font-family: var(--f-money); font-weight: 600; font-size: 16px;
+  color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+
+/* ---- Faixa "sua posição" ---- */
+.rank__you {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+  padding: 18px; border-top: 1px solid var(--line); background: rgba(13,11,10,.4);
+}
+.rank__you-txt { font-family: var(--f-read); font-size: 14px; color: var(--ink-3); }
+@media (min-width: 620px) {
+  .rank__you { flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; }
+}
+/* telas estreitas: a patente sai para o ELO nunca ser espremido */
+@media (max-width: 520px) {
+  .rank__table th:nth-child(3), .rank__table td:nth-child(3) { display: none; }
+  .rank__table th, .rank__table td, .rank__cap, .rank__bar { padding-inline: 13px; }
+}
+
+/* ============================================================
    5. LANCES (clipe)
    ============================================================ */
 .clip { max-width: 960px; margin-inline: auto; }
@@ -423,7 +567,9 @@ em {
   clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
   box-shadow: 0 0 60px rgba(255,122,0,.12);
 }
-.clip__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.clip__frame iframe,
+.clip__video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.clip__video { object-fit: cover; background: #000; display: block; }
 .clip__cap { margin-top: 14px; color: var(--ink-3); text-align: center; }
 
 /* ============================================================
@@ -504,6 +650,21 @@ em {
    FOOTER
    ============================================================ */
 .footer { border-top: 1px solid var(--line); padding-block: 56px; background: var(--bg); }
+
+/* ---- CTA compacto no topo do rodapé ---- */
+/* full-bleed como as outras divisórias da página (.footer, .cta-final) */
+.footer__cta { border-bottom: 1px solid var(--line); padding-bottom: 30px; margin-bottom: 34px; }
+.footer__cta-inner {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+}
+.footer__cta-txt {
+  font-family: var(--f-ui); font-size: 16.5px; font-weight: 500;
+  color: var(--ink); line-height: 1.4; max-width: 40ch;
+}
+@media (min-width: 620px) {
+  .footer__cta-inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 28px; }
+}
+
 .footer__inner { display: flex; flex-direction: column; gap: 26px; }
 .footer__brand { display: flex; flex-direction: column; gap: 10px; }
 .footer__tagline { color: var(--orange); letter-spacing: .16em; }

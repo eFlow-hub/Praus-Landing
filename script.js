@@ -4,33 +4,140 @@
 
   /* ---------- Waitlist (captura de e-mail) ---------- */
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var API = document.documentElement.getAttribute("data-api") || "/api";
+
+  /* Repassa as UTMs da URL para a API, para saber de onde veio o lead. */
+  function utms() {
+    var q = new URLSearchParams(location.search);
+    return {
+      utm_source: q.get("utm_source") || undefined,
+      utm_medium: q.get("utm_medium") || undefined,
+      utm_campaign: q.get("utm_campaign") || undefined,
+    };
+  }
+
+  /* ---------- Vagas esgotadas ----------
+     Pinta de cinza e desativa TODOS os CTAs da waitlist: os dois botões de
+     envio e os links que apontam para #waitlist (nav, ranking, rodapé). */
+  var ROTULO_ESGOTADO = "Acessos Esgotados";
+  var esgotado = false;
+
+  function aplicaEsgotado() {
+    if (esgotado) return;
+    esgotado = true;
+
+    document.querySelectorAll(".waitlist").forEach(function (form) {
+      var campo = form.querySelector(".waitlist__field");
+      var input = form.querySelector('input[type="email"]');
+      var botao = form.querySelector('button[type="submit"]');
+      var micro = form.querySelector(".waitlist__micro");
+      var erro = form.querySelector(".waitlist__error");
+
+      if (campo) campo.hidden = false;
+      if (input) { input.disabled = true; input.value = ""; input.placeholder = "Fila encerrada"; }
+      if (botao) {
+        botao.disabled = true;
+        botao.classList.add("btn--esgotado");
+        botao.textContent = ROTULO_ESGOTADO;
+      }
+      if (erro) erro.hidden = true;
+      if (micro) micro.textContent = "As 1.200 vagas do beta foram preenchidas. Fique de olho nas nossas redes para a próxima leva.";
+    });
+
+    /* Links viram estado inerte: sem href, para não navegarem nem receberem foco
+       como se ainda fossem acionáveis. */
+    document.querySelectorAll('a.btn[href="#waitlist"]').forEach(function (a) {
+      a.classList.add("btn--esgotado");
+      a.setAttribute("aria-disabled", "true");
+      a.removeAttribute("href");
+      a.textContent = ROTULO_ESGOTADO;
+    });
+  }
+
+  /* Consulta no carregamento: se já estiver lotado, o visitante nem chega a
+     digitar. Falha de rede aqui é ignorada de propósito — na dúvida, deixa
+     tentar; o POST é a fonte da verdade. */
+  fetch(API + "/waitlist/status", { headers: { Accept: "application/json" } })
+    .then(function (r) { return r.json(); })
+    .then(function (d) { if (d && d.esgotado) aplicaEsgotado(); })
+    .catch(function () {});
 
   function bindForm(form) {
     var input = form.querySelector('input[type="email"]');
+    var button = form.querySelector('button[type="submit"]');
     var success = form.querySelector(".waitlist__success");
+    var error = form.querySelector(".waitlist__error");
     var field = form.querySelector(".waitlist__field");
     var micro = form.querySelector(".waitlist__micro");
+    var source = form.getAttribute("data-source") || "desconhecida";
+    var rotuloBotao = button ? button.innerHTML : "";
+    var enviando = false;
+
+    function mostraErro(msg) {
+      if (!error) return;
+      error.textContent = msg;
+      error.hidden = false;
+    }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (enviando || esgotado) return;
+
       var value = (input.value || "").trim();
       if (!EMAIL_RE.test(value)) {
         input.classList.add("invalid");
         input.focus();
+        mostraErro("Confere o e-mail — parece que falta alguma coisa.");
         return;
       }
+
       input.classList.remove("invalid");
-      try {
-        var list = JSON.parse(localStorage.getItem("praus_waitlist") || "[]");
-        if (list.indexOf(value) === -1) list.push(value);
-        localStorage.setItem("praus_waitlist", JSON.stringify(list));
-      } catch (err) {}
-      if (field) field.hidden = true;
-      if (micro) micro.hidden = true;
-      if (success) success.hidden = false;
+      if (error) error.hidden = true;
+      enviando = true;
+      if (button) { button.disabled = true; button.textContent = "ENVIANDO..."; }
+
+      var corpo = utms();
+      corpo.email = value;
+      corpo.source = source;
+
+      fetch(API + "/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(corpo),
+      })
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) {
+            if (!r.ok || !d.ok) {
+              /* marcado para o catch saber que a mensagem veio da API e já
+                 está em português — falha de rede cai na mensagem genérica */
+              var e = new Error(d.erro || "Não consegui registrar agora. Tente de novo.");
+              e.daApi = true;
+              /* as vagas acabaram entre o carregamento e este envio */
+              e.esgotado = Boolean(d.esgotado);
+              throw e;
+            }
+            return d;
+          });
+        })
+        .then(function () {
+          if (field) field.hidden = true;
+          if (micro) micro.hidden = true;
+          if (success) success.hidden = false;
+        })
+        .catch(function (err) {
+          enviando = false;
+          if (err && err.esgotado) { aplicaEsgotado(); return; }
+          mostraErro(err && err.daApi
+            ? err.message
+            : "Sem conexão com o servidor. Confere a internet e tenta de novo.");
+          if (button) { button.disabled = false; button.innerHTML = rotuloBotao; }
+        });
     });
 
-    input.addEventListener("input", function () { input.classList.remove("invalid"); });
+    input.addEventListener("input", function () {
+      input.classList.remove("invalid");
+      if (error) error.hidden = true;
+    });
   }
   document.querySelectorAll(".waitlist").forEach(bindForm);
 
@@ -60,7 +167,7 @@
   }
 
   /* Stagger leve dentro de grupos de cards */
-  document.querySelectorAll(".feats, .games, .partners, .stats").forEach(function (group) {
+  document.querySelectorAll(".games, .partners").forEach(function (group) {
     group.querySelectorAll(".reveal").forEach(function (el, i) {
       el.style.transitionDelay = (i % 4) * 70 + "ms";
     });
@@ -133,5 +240,42 @@
     } else { inView = true; resetTimer(); }
 
     activate(0, false);
+  })();
+
+  /* ---------- Ranking: abas Jogadores / Times ---------- */
+  (function rankTabs() {
+    var wrap = document.querySelector(".rank__tabs");
+    if (!wrap) return;
+
+    var tabs = Array.prototype.slice.call(wrap.querySelectorAll(".rank__tab"));
+    var panels = tabs.map(function (t) {
+      return document.getElementById(t.getAttribute("aria-controls"));
+    });
+    if (!tabs.length || panels.indexOf(null) !== -1) return;
+
+    function select(i, moveFocus) {
+      i = (i + tabs.length) % tabs.length;
+      tabs.forEach(function (t, idx) {
+        var on = idx === i;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        /* roving tabindex: só a aba ativa fica no fluxo do Tab */
+        t.tabIndex = on ? 0 : -1;
+        panels[idx].hidden = !on;
+      });
+      if (moveFocus) tabs[i].focus();
+    }
+
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { select(i, false); });
+      t.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); select(i + 1, true); }
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); select(i - 1, true); }
+        else if (e.key === "Home") { e.preventDefault(); select(0, true); }
+        else if (e.key === "End") { e.preventDefault(); select(tabs.length - 1, true); }
+      });
+    });
+
+    select(0, false);
   })();
 })();

@@ -7,6 +7,12 @@
 <meta name="description" content="A PRAUS é a infraestrutura de skill-based matchmaking do Brasil. Escolhe o jogo, encontra rival do seu nível, dispute o pote e recebe no PIX. Garanta seu acesso ao beta." />
 <meta name="theme-color" content="#14110F" />
 
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon-16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png" />
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+
 <meta property="og:title" content="PRAUS — Jogue valendo." />
 <meta property="og:description" content="Skill-based matchmaking brasileiro. Sua habilidade vira dinheiro, com árbitro ao vivo, escrow e PIX." />
 <meta property="og:type" content="website" />
@@ -22,11 +28,14 @@
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
   <div class="wrap nav__inner">
-    <a href="#top" class="wordmark" aria-label="PRAUS">PRAUS</a>
+    <a href="#top" class="wordmark">
+      <span class="wordmark__text">PRAUS</span>
+      <img class="wordmark__mark" src="assets/brand/praus-mark.png" alt="" width="154" height="160" decoding="async" />
+    </a>
     <nav class="nav__menu" aria-label="Principal">
-      <a href="#diferenciais">Diferenciais</a>
       <a href="#como-funciona">Como funciona</a>
       <a href="#jogos">Jogos</a>
+      <a href="#ranking">Ranking</a>
       <a href="#lances">Lances</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -62,7 +71,7 @@
       recebe no PIX — com árbitro ao vivo em cada partida.
     </p>
 
-    <form class="waitlist reveal" id="hero-form" novalidate>
+    <form class="waitlist reveal" id="hero-form" data-source="hero" novalidate>
       <div class="waitlist__field">
         <input type="email" name="email" inputmode="email" autocomplete="email"
                placeholder="seu@email.com" aria-label="Seu e-mail" required />
@@ -74,82 +83,18 @@
       <p class="waitlist__success" role="status" hidden>
         Você está na fila. A gente chama quando o beta abrir pra você.
       </p>
+      <p class="waitlist__error" role="alert" hidden></p>
     </form>
   </div>
 
-  <a href="#diferenciais" class="hero__scroll mono-tag" aria-label="Rolar para o conteúdo">SCROLL ↓</a>
+  <a href="#como-funciona" class="hero__scroll mono-tag" aria-label="Rolar para o conteúdo">SCROLL ↓</a>
 </section>
 
-<!-- ============ 2. DIFERENCIAIS (proposta de valor) ============ -->
-<section class="section" id="diferenciais">
-  <div class="wrap">
-    <header class="section__head reveal">
-      <span class="kicker mono-tag">01 / POR QUE PRAUS</span>
-      <h2 class="section__title">NOVA NO CENÁRIO. <em>séria</em> NO JOGO.</h2>
-      <p class="section__lead">
-        Skill-based matchmaking não é promessa nova — entregar com
-        segurança, multi-game e pagamento na hora é o que faltava no
-        Brasil. A PRAUS chega para ocupar esse espaço.
-      </p>
-    </header>
-
-    <div class="feats">
-      <!-- Tile HUD — mini-painel de partida ao vivo -->
-      <article class="feat feat--hud card reveal">
-        <div class="hud">
-          <div class="hud__top">
-            <span class="hud__live mono-tag"><i></i>AO VIVO</span>
-            <span class="hud__id mono-tag">MATCH #A8F2</span>
-          </div>
-
-          <div class="hud__timer">
-            <span class="hud__timer-num">00:42</span>
-            <span class="hud__timer-label mono-tag">TEMPO ATÉ O MATCH</span>
-          </div>
-
-          <div class="hud__line">
-            <span class="hud__line-label mono-tag">PRIZE POOL</span>
-            <span class="hud__line-val">R$ 1.250 <em class="hud__pix">→ PIX</em></span>
-          </div>
-          <div class="hud__bar" aria-hidden="true"><span></span></div>
-          <span class="hud__escrow mono-tag">ESCROW · LIBERA NO PIX APÓS VALIDAÇÃO</span>
-        </div>
-        <div class="feat__foot">
-          <h3 class="feat__title">Partida real, dinheiro garantido</h3>
-          <p class="feat__body">Árbitro humano ao vivo em cada match e prize pool em escrow até validar. O que você vê é o produto.</p>
-        </div>
-      </article>
-
-      <!-- Cards limpos -->
-      <article class="feat card reveal">
-        <span class="feat__idx mono-tag">D1</span>
-        <h3 class="feat__title">Pareamento por habilidade</h3>
-        <p class="feat__body">Você joga contra quem está no seu nível. O resultado vem da skill — não do azar.</p>
-      </article>
-      <article class="feat card reveal">
-        <span class="feat__idx mono-tag">D2</span>
-        <h3 class="feat__title">Multi-game de largada</h3>
-        <p class="feat__body">Não é plataforma de um título só. É o portfólio que o Brasil joga, e crescendo.</p>
-      </article>
-      <article class="feat card reveal">
-        <span class="feat__idx mono-tag">D3</span>
-        <h3 class="feat__title">PIX na hora</h3>
-        <p class="feat__body">Resultado validado, prêmio direto na conta. Sem fila de saque, sem intermediário.</p>
-      </article>
-      <article class="feat card reveal">
-        <span class="feat__idx mono-tag">D4</span>
-        <h3 class="feat__title">Brasil-first</h3>
-        <p class="feat__body">PT-BR, servidor BR, KYC nacional e os jogos que a gente joga aqui.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 3. COMO FUNCIONA ============ -->
+<!-- ============ 2. COMO FUNCIONA ============ -->
 <section class="section section--alt" id="como-funciona">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">02 / COMO FUNCIONA</span>
+      <span class="kicker mono-tag">01 / COMO FUNCIONA</span>
       <h2 class="section__title">TRÊS PASSOS. <em>quarenta</em> SEGUNDOS.</h2>
     </header>
 
@@ -246,11 +191,11 @@
   </div>
 </section>
 
-<!-- ============ 4. JOGOS ============ -->
+<!-- ============ 3. JOGOS ============ -->
 <section class="section" id="jogos">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">03 / MODALIDADES</span>
+      <span class="kicker mono-tag">02 / MODALIDADES</span>
       <h2 class="section__title">COMECE A JOGAR <em>valendo.</em></h2>
       <p class="section__lead">
         CS2 e Dota 2 ativos no beta. Valorant e Fortnite chegando. O
@@ -308,28 +253,122 @@
   </div>
 </section>
 
-<!-- ============ 5. LANCES (clipes de campeonato) ============ -->
+<!-- ============ 4. RANKING ============ -->
+<!-- Mesma função da seção de rankings do FACEIT: mostrar a escada competitiva
+     e dar ao visitante um lugar concreto para se projetar. Como a PRAUS está
+     em pré-launch, os dados são ilustrativos e a tabela é apresentada como
+     prévia do produto (mesma linguagem visual das telas de "Como funciona"). -->
+<section class="section section--edge" id="ranking">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <span class="kicker mono-tag">03 / RANKING</span>
+      <h2 class="section__title">SUBA A ESCADA. <em>prove</em> ONDE VOCÊ ESTÁ.</h2>
+      <p class="section__lead">
+        Cada partida validada move seu ELO. Escale as patentes sozinho ou com
+        seu time e veja exatamente onde você aparece entre os competidores do
+        seu jogo.
+      </p>
+    </header>
+
+    <div class="rank reveal">
+      <div class="rank__bar mono-tag">
+        <span>PRAUS · RANKING</span>
+        <span>TEMPORADA 01 · CS2</span>
+      </div>
+
+      <div class="rank__tabs" role="tablist" aria-label="Ranking por categoria">
+        <button type="button" class="rank__tab is-active" role="tab" aria-selected="true"
+                aria-controls="rank-jogadores" id="rank-tab-jogadores">JOGADORES</button>
+        <button type="button" class="rank__tab" role="tab" aria-selected="false" tabindex="-1"
+                aria-controls="rank-times" id="rank-tab-times">TIMES</button>
+      </div>
+
+      <div class="rank__panel" id="rank-jogadores" role="tabpanel" aria-labelledby="rank-tab-jogadores" tabindex="0">
+        <table class="rank__table">
+          <caption class="rank__cap mono-tag">Prévia do sistema de ranking · jogadores · dados ilustrativos</caption>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Jogador</th>
+              <th scope="col">Patente</th>
+              <th scope="col">ELO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="rank__pos">1</td><td class="rank__nick">zk1nho</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.412</td></tr>
+            <tr><td class="rank__pos">2</td><td class="rank__nick">dracco</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.298</td></tr>
+            <tr><td class="rank__pos">3</td><td class="rank__nick">mth4us</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.180</td></tr>
+            <tr><td class="rank__pos">4</td><td class="rank__nick">p4vvn</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.121</td></tr>
+            <tr><td class="rank__pos">5</td><td class="rank__nick">rex0ne</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.064</td></tr>
+            <tr><td class="rank__pos">6</td><td class="rank__nick">lucao_</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.998</td></tr>
+            <tr><td class="rank__pos">7</td><td class="rank__nick">k1ng.br</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.945</td></tr>
+            <tr><td class="rank__pos">8</td><td class="rank__nick">vnzz</td><td class="rank__tier">Platina I</td><td class="rank__elo">2.877</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="rank__panel" id="rank-times" role="tabpanel" aria-labelledby="rank-tab-times" tabindex="0" hidden>
+        <table class="rank__table">
+          <caption class="rank__cap mono-tag">Prévia do sistema de ranking · times · dados ilustrativos</caption>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Time</th>
+              <th scope="col">Patente</th>
+              <th scope="col">ELO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="rank__pos">1</td><td class="rank__nick">Cangaço</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.355</td></tr>
+            <tr><td class="rank__pos">2</td><td class="rank__nick">Matilha</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.240</td></tr>
+            <tr><td class="rank__pos">3</td><td class="rank__nick">Pantanal</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.156</td></tr>
+            <tr><td class="rank__pos">4</td><td class="rank__nick">Garoa</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.088</td></tr>
+            <tr><td class="rank__pos">5</td><td class="rank__nick">Vórtex</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.011</td></tr>
+            <tr><td class="rank__pos">6</td><td class="rank__nick">Caatinga</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.960</td></tr>
+            <tr><td class="rank__pos">7</td><td class="rank__nick">Maré Alta</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.902</td></tr>
+            <tr><td class="rank__pos">8</td><td class="rank__nick">Sertão</td><td class="rank__tier">Platina I</td><td class="rank__elo">2.845</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="rank__you">
+        <p class="rank__you-txt">Sua posição entra aqui depois da primeira partida validada.</p>
+        <a href="#waitlist" class="btn btn--sm btn--primary">DISPUTAR MINHA VAGA <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. LANCES (teaser da PRAUS) ============ -->
 <section class="section section--alt" id="lances">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">04 / LANCES</span>
+      <span class="kicker mono-tag">04 / TEASER</span>
       <h2 class="section__title">O CLUTCH QUE VALE O <em>pote.</em></h2>
       <p class="section__lead">
-        O nível que decide campeonato é o mesmo que você vai disputar.
-        Lances de competição profissional de Valorant para entrar no clima.
+        A tensão de quem tem dinheiro na linha não se explica — se sente.
+        Vinte e três segundos do que a PRAUS está construindo.
       </p>
     </header>
 
     <div class="clip reveal">
       <div class="clip__frame">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/Jvc2PRdAEJc?rel=0&modestbranding=1&playsinline=1"
-          title="Lances de campeonato — Valorant"
-          loading="lazy"
-          allow="accelerated-performance; autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen></iframe>
+        <!-- preload="none": o arquivo de 23 MB só é baixado se a pessoa der
+             play. O poster é uma imagem de 107 KB extraída do próprio teaser,
+             então a seção não custa quase nada a quem só passa rolando. -->
+        <video
+          class="clip__video"
+          controls
+          preload="none"
+          playsinline
+          poster="assets/video/teaser-poster.jpg"
+          width="1920" height="1080">
+          <source src="assets/video/TeaserLanding.mp4" type="video/mp4" />
+          Seu navegador não reproduz este vídeo.
+          <a href="assets/video/TeaserLanding.mp4">Baixe o teaser</a>.
+        </video>
       </div>
-      <p class="clip__cap mono-tag">VALORANT CHAMPIONS · TOP PLAYS</p>
+      <p class="clip__cap mono-tag">PRAUS · TEASER OFICIAL</p>
     </div>
   </div>
 </section>
@@ -364,40 +403,41 @@
   </div>
 </section>
 
-<!-- ============ 7. NÚMEROS / DIMENSÃO ============ -->
-<section class="section section--alt" id="dimensao">
-  <div class="wrap">
-    <header class="section__head reveal">
-      <span class="kicker mono-tag">06 / DIMENSÃO</span>
-      <h2 class="section__title">UM MERCADO QUE JÁ EXISTE.</h2>
-    </header>
+<!-- ============ 7. CTA FINAL ============ -->
+<section class="cta-final" id="waitlist">
+  <div class="cta-final__glow" aria-hidden="true"></div>
+  <div class="wrap cta-final__inner">
+    <span class="kicker mono-tag reveal">FILA ABERTA · VAGAS DO BETA</span>
+    <h2 class="cta-final__title reveal">PRESS START.<br /><em>play</em> PRAUS.</h2>
+    <p class="cta-final__sub reveal">
+      Garanta seu acesso ao beta. Quando abrir pra você, é só escolher o
+      jogo e disputar o pote.
+    </p>
 
-    <div class="stats">
-      <div class="stat reveal">
-        <span class="stat__num">103M+</span>
-        <span class="stat__desc">gamers no Brasil</span>
+    <form class="waitlist waitlist--center reveal" id="footer-form" data-source="cta" novalidate>
+      <div class="waitlist__field">
+        <input type="email" name="email" inputmode="email" autocomplete="email"
+               placeholder="seu@email.com" aria-label="Seu e-mail" required />
+        <button type="submit" class="btn btn--primary">
+          GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
+        </button>
       </div>
-      <div class="stat reveal">
-        <span class="stat__num">65M</span>
-        <span class="stat__desc">ativos nos jogos do portfólio</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num">US$ 30 bi</span>
-        <span class="stat__desc">mercado global de skill-based gaming, crescendo 20% ao ano</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat__num">R$ 8 bi</span>
-        <span class="stat__desc">disponíveis no Brasil</span>
-      </div>
-    </div>
+      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
+      <p class="waitlist__success" role="status" hidden>
+        Você está na fila. A gente chama quando o beta abrir pra você.
+      </p>
+      <p class="waitlist__error" role="alert" hidden></p>
+    </form>
   </div>
 </section>
 
 <!-- ============ 8. FAQ ============ -->
-<section class="section" id="faq">
+<!-- section--alt: com o CTA agora acima, o FAQ precisa contrastar com ele.
+     Segue a mesma alternância de fundo que corre pela página inteira. -->
+<section class="section section--alt" id="faq">
   <div class="wrap wrap--narrow">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">07 / PERGUNTAS DIRETAS</span>
+      <span class="kicker mono-tag">06 / PERGUNTAS DIRETAS</span>
       <h2 class="section__title">SEM RODEIO.</h2>
     </header>
 
@@ -426,40 +466,25 @@
   </div>
 </section>
 
-<!-- ============ 9. CTA FINAL ============ -->
-<section class="cta-final" id="waitlist">
-  <div class="cta-final__glow" aria-hidden="true"></div>
-  <div class="wrap cta-final__inner">
-    <span class="kicker mono-tag reveal">FILA ABERTA · VAGAS DO BETA</span>
-    <h2 class="cta-final__title reveal">PRESS START.<br /><em>play</em> PRAUS.</h2>
-    <p class="cta-final__sub reveal">
-      Garanta seu acesso ao beta. Quando abrir pra você, é só escolher o
-      jogo e disputar o pote.
-    </p>
-
-    <form class="waitlist waitlist--center reveal" id="footer-form" novalidate>
-      <div class="waitlist__field">
-        <input type="email" name="email" inputmode="email" autocomplete="email"
-               placeholder="seu@email.com" aria-label="Seu e-mail" required />
-        <button type="submit" class="btn btn--primary">
-          GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
-        </button>
-      </div>
-      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
-      <p class="waitlist__success" role="status" hidden>
-        Você está na fila. A gente chama quando o beta abrir pra você.
-      </p>
-    </form>
-  </div>
-</section>
-
 </main>
 
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
+  <!-- CTA compacto: fecha o loop de quem acabou de ler o FAQ, sem
+       obrigar a rolar de volta até a seção de waitlist -->
+  <div class="footer__cta">
+    <div class="wrap footer__cta-inner">
+      <p class="footer__cta-txt">Tirou as dúvidas? A fila do beta está aberta.</p>
+      <a href="#waitlist" class="btn btn--sm btn--primary">ENTRAR NA FILA <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
   <div class="wrap footer__inner">
     <div class="footer__brand">
-      <span class="wordmark wordmark--footer">PRAUS</span>
+      <span class="wordmark wordmark--footer">
+        <span class="wordmark__text">PRAUS</span>
+        <img class="wordmark__mark" src="assets/brand/praus-mark.png" alt="" width="154" height="160" loading="lazy" decoding="async" />
+      </span>
       <p class="footer__tagline mono-tag">PRESS START. PLAY PRAUS.</p>
     </div>
     <nav class="footer__links" aria-label="Documentos">

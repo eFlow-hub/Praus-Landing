@@ -1,6 +1,11 @@
 # Ferramentas locais / preview
 .claude/
 
+# Backend
+node_modules/
+server/.env
+*.log
+
 # Lixo de SO
 Thumbs.db
 ehthumbs.db
