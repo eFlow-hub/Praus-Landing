@@ -1,5 +1,6 @@
 # Ferramentas locais / preview
 .claude/
+graphify-out/
 
 # Backend
 node_modules/
