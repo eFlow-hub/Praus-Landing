@@ -164,7 +164,7 @@ em {
 .nav__inner { display: flex; align-items: center; gap: 26px; height: 64px; }
 .nav__menu { display: none; gap: 26px; margin-left: 10px; }
 .nav__menu a {
-  font-family: var(--f-ui); font-size: 14px; color: var(--ink-3);
+  font-family: var(--f-money); font-size: 14px; color: var(--ink-3);
   transition: color .15s ease;
 }
 .nav__menu a:hover { color: var(--ink); }
