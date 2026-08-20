@@ -130,14 +130,15 @@ em {
 
 /* ---------- Botões (chanfros, mono uppercase) ---------- */
 .btn {
-  --c: var(--chamfer);
+  border-radius: 10px;
   display: inline-flex; align-items: center; justify-content: center; gap: .5em;
-  font-family: var(--f-mono); font-size: 14px; font-weight: 700;
+  font-family: var(--f-ui); font-size: 16px; font-weight: 650;
   letter-spacing: .08em; text-transform: uppercase;
   padding: 16px 26px; border: none; cursor: pointer; white-space: nowrap;
-  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
+  border: 1.5px solid currentColor; 
   transition: background-color .15s ease, color .15s ease, transform .06s ease, box-shadow .15s ease;
 }
+.btn__arrow { display: inline-block; transition: transform .2s ease; } .btn:hover .btn__arrow { transform: translateX(4px); }
 .btn:active { transform: translateY(1px); }
 .btn--primary { background: var(--orange); color: #000; }
 .btn--primary:hover { background: var(--orange-hot); box-shadow: 0 0 28px rgba(255,122,0,.35); }
