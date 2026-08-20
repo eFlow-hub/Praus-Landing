@@ -24,7 +24,7 @@
   --info: #7CC9FF;
 
   /* Tipografia — 8 papéis */
-  --f-hero: 'Teko', sans-serif;
+  --f-hero: 'Bebas Neue', sans-serif;
   --f-num:    'Bebas Neue', sans-serif;
   --f-italic: 'Newsreader', Georgia, serif;
   --f-money:  'Space Grotesk', sans-serif;
@@ -164,7 +164,7 @@ em {
 }
 .nav.is-stuck { background: rgba(20,17,15,.85); backdrop-filter: blur(12px); border-bottom-color: var(--line); }
 .nav__inner { display: flex; align-items: center; gap: 26px; height: 64px; }
-.nav__menu { display: none; gap: 80px; margin-left: 60px; }
+.nav__menu { display: none; gap: 80px; margin-left: 55px; }
 .nav__menu a {
   font-family: var(--f-money); font-size: 15px; color: var(--ink-3); font-weight: 600; 
   transition: color .15s ease;  
@@ -206,7 +206,7 @@ em {
 
 .hero__title {
   font-family: var(--f-hero); font-weight: 600; text-transform: uppercase;
-  letter-spacing: -0.01em; line-height: 1.2;
+  letter-spacing: -0.01em; line-height: 0.9;
   font-size: clamp(48px, 9.4vw, 116px); margin-bottom: 24px; max-width: 14ch;
   text-shadow: 0 4px 40px rgba(0,0,0,.5);
 }
