@@ -382,7 +382,7 @@ em {
 .screen {
   --c: 12px; background: linear-gradient(180deg, var(--bg-3), var(--bg)); border: 1px solid var(--line);
   overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,.35);
-  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
+  border-radius: var(--c);
   animation: screenIn .4s ease;
 }
 @keyframes screenIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -407,14 +407,13 @@ em {
 .chip {
   --c: 6px; font-family: var(--f-mono); font-size: 12px; font-weight: 700; letter-spacing: .05em;
   color: var(--ink); background: var(--bg-2); border: 1px solid var(--line); padding: 9px 14px; cursor: default;
-  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
+  border-radius: var(--c);
 }
 .chip--on { background: var(--orange); color: #000; border-color: var(--orange); }
 .screen__cta {
   --c: 8px; margin-top: auto; text-align: center; font-family: var(--f-mono); font-weight: 700;
   font-size: 14px; letter-spacing: .08em; color: #000; background: var(--orange); padding: 15px;
-  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
-}
+  border-radius: var(--c); } 
 
 /* tela 2 — placar */
 .screen__score { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 8px 0 4px; }
