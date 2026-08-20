@@ -24,7 +24,7 @@
   --info: #7CC9FF;
 
   /* Tipografia — 8 papéis */
-  --f-hero:   'Anton', sans-serif;
+  --f-hero: 'Clash Display', sans-serif;
   --f-num:    'Bebas Neue', sans-serif;
   --f-italic: 'Newsreader', Georgia, serif;
   --f-money:  'Space Grotesk', sans-serif;
@@ -126,7 +126,7 @@ em {
 .wordmark__full { height: 1.45em; width: auto; display: block; }
 /* respiro vertical dá ao link da nav um alvo de toque confortável */
 .nav .wordmark { padding-block: 8px; }
-.wordmark--footer { font-size: 34px; }
+.wordmark--footer { font-size: 48px; }
 
 /* ---------- Botões (chanfros, mono uppercase) ---------- */
 .btn {
@@ -164,7 +164,7 @@ em {
 }
 .nav.is-stuck { background: rgba(20,17,15,.85); backdrop-filter: blur(12px); border-bottom-color: var(--line); }
 .nav__inner { display: flex; align-items: center; gap: 26px; height: 64px; }
-.nav__menu { display: none; gap: 80px; margin-left: 80px; }
+.nav__menu { display: none; gap: 80px; margin-left: 70px; }
 .nav__menu a {
   font-family: var(--f-money); font-size: 15px; color: var(--ink-3); font-weight: 600; 
   transition: color .15s ease;  
@@ -228,11 +228,10 @@ em {
 .waitlist__field { display: flex; flex-direction: column; gap: 12px; }
 @media (min-width: 520px) { .waitlist__field { flex-direction: row; } }
 .waitlist input[type="email"] {
-  --c: var(--chamfer); flex: 1; min-width: 0;
+  flex: 1; min-width: 0;
   font-family: var(--f-ui); font-size: 16px; color: var(--ink);
   background: rgba(34,29,25,.92); border: 1px solid var(--line); padding: 16px 18px;
-  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
-}
+  border-radius: 10px; }
 .waitlist input::placeholder { color: var(--ink-3); }
 .waitlist input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
 .waitlist input.invalid { border-color: var(--loss); box-shadow: 0 0 0 1px var(--loss); }
