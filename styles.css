@@ -211,7 +211,7 @@ em {
   text-shadow: 0 4px 40px rgba(0,0,0,.5);
 }
 .hero__sub {
-  font-family: var(--f-read); font-size: clamp(16px, 2.2vw, 20px); line-height: 1.55;
+  font-family: var(--f-money); font-size: clamp(16px, 2.2vw, 20px); line-height: 1.55;
   color: #e7e0d8; max-width: 54ch; margin-bottom: 34px;
   text-shadow: 0 2px 18px rgba(0,0,0,.55);
 }
