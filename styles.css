@@ -113,7 +113,7 @@ em {
 /* ---------- Wordmark (letreiro stencil + marca do cavalo) ---------- */
 .wordmark {
   display: inline-flex; align-items: center; gap: 0.38em;
-  font-size: 36px; line-height: 1; color: var(--ink);
+  font-size: 46px; line-height: 1; color: var(--ink);
 }
 .wordmark__mark { height: 1.45em; width: auto; flex: none; }
 .wordmark__text {
