@@ -162,9 +162,9 @@ em {
 }
 .nav.is-stuck { background: rgba(20,17,15,.85); backdrop-filter: blur(12px); border-bottom-color: var(--line); }
 .nav__inner { display: flex; align-items: center; gap: 26px; height: 64px; }
-.nav__menu { display: none; gap: 55px; margin-left: 10px; }
+.nav__menu { display: none; gap: 80px; margin-left: 10px; }
 .nav__menu a {
-  font-family: var(--f-money); font-size: 14px; color: var(--ink-3);
+  font-family: var(--f-money); font-size: 15px; color: var(--ink-2); font-weight: 600; 
   transition: color .15s ease;  
   position: relative;
 }
