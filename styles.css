@@ -113,7 +113,7 @@ em {
 /* ---------- Wordmark (letreiro stencil + marca do cavalo) ---------- */
 .wordmark {
   display: inline-flex; align-items: center; gap: 0.38em;
-  font-size: 22px; line-height: 1; color: var(--ink);
+  font-size: 26px; line-height: 1; color: var(--ink);
 }
 .wordmark__mark { height: 1.45em; width: auto; flex: none; }
 .wordmark__text {
@@ -123,6 +123,7 @@ em {
      gap acima ser o espaçamento real entre o letreiro e a marca */
   margin-right: -0.26em;
 }
+.wordmark__full { height: 1.45em; width: auto; display: block; }
 /* respiro vertical dá ao link da nav um alvo de toque confortável */
 .nav .wordmark { padding-block: 8px; }
 .wordmark--footer { font-size: 34px; }
@@ -164,7 +165,7 @@ em {
 .nav__inner { display: flex; align-items: center; gap: 26px; height: 64px; }
 .nav__menu { display: none; gap: 80px; margin-left: 10px; }
 .nav__menu a {
-  font-family: var(--f-money); font-size: 15px; color: var(--ink-2); font-weight: 600; 
+  font-family: var(--f-money); font-size: 15px; color: var(--ink-3); font-weight: 600; 
   transition: color .15s ease;  
   position: relative;
 }
