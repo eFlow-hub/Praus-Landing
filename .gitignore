@@ -1,5 +1,6 @@
 # Ferramentas locais / preview
 .claude/
+.impeccable/
 graphify-out/
 
 # Backend
