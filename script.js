@@ -2,6 +2,9 @@
 (function () {
   "use strict";
 
+  var reduzMovimento = window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   /* ---------- Waitlist (captura de e-mail) ---------- */
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var API = document.documentElement.getAttribute("data-api") || "/api";
@@ -131,6 +134,9 @@
             ? err.message
             : "Sem conexão com o servidor. Confere a internet e tenta de novo.");
           if (button) { button.disabled = false; button.innerHTML = rotuloBotao; }
+          /* leitor de tela já ouve o role="alert"; mover o foco devolve o
+             teclado ao campo que precisa ser corrigido */
+          if (input) input.focus();
         });
     });
 
@@ -140,6 +146,47 @@
     });
   }
   document.querySelectorAll(".waitlist").forEach(bindForm);
+
+  /* ---------- Herói: vídeo de fundo sob demanda ----------
+     O markup entrega os dois <video> vazios (data-src, sem autoplay), porque
+     com autoplay o navegador baixa antes de qualquer condição ser avaliada.
+     Aqui decidimos o que vale a pena baixar:
+       - reduced-motion: nada. O carvão de .hero__bg mais o scrim já são um
+         herói legível, e loop de fundo é exatamente o movimento que a
+         preferência pede para não existir.
+       - abaixo de 900px: só o clipe A. O B tem 17,8 MB e serve apenas ao
+         crossfade, que some junto (.hero__bg--solo).
+     Fora de tela os dois pausam: decoder de vídeo rodando escondido é
+     bateria e frame perdido no resto da página. */
+  (function heroVideo() {
+    var bg = document.querySelector(".hero__bg");
+    var hero = document.querySelector(".hero");
+    if (!bg || !hero) return;
+
+    var vids = Array.prototype.slice.call(bg.querySelectorAll(".hero__vid"));
+    if (!vids.length || reduzMovimento) return;
+
+    var largo = !window.matchMedia || window.matchMedia("(min-width: 900px)").matches;
+    if (!largo) {
+      bg.classList.add("hero__bg--solo");
+      vids = vids.slice(0, 1);
+    }
+
+    function toca(v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+
+    vids.forEach(function (v) {
+      v.src = v.getAttribute("data-src");
+      v.load();
+      toca(v);
+    });
+
+    if (!("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        vids.forEach(function (v) { if (en.isIntersecting) toca(v); else v.pause(); });
+      });
+    }, { threshold: 0 }).observe(hero);
+  })();
 
   /* ---------- Nav fundo ao rolar ---------- */
   var nav = document.querySelector(".nav");
@@ -182,9 +229,14 @@
     var screens = Array.prototype.slice.call(flow.querySelectorAll(".screen"));
     if (!steps.length) return;
 
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var interval = parseInt(flow.getAttribute("data-autoplay"), 10) || 4800;
     flow.style.setProperty("--fill", interval + "ms");
+
+    /* Abaixo de 920px o controle e a tela que ele troca não cabem juntos na
+       viewport: o passo avançaria sozinho fora do campo de visão. Ali o
+       stepper nasce manual. */
+    var estreito = window.matchMedia && !window.matchMedia("(min-width: 920px)").matches;
+    var manual = reduzMovimento || estreito;
 
     var current = 0;
     var timer = null;
@@ -198,48 +250,70 @@
       bar.style.animation = "";
     }
 
-    function activate(i, fromUser) {
+    function activate(i) {
       current = (i + steps.length) % steps.length;
       steps.forEach(function (s, idx) {
         var on = idx === current;
         s.classList.toggle("is-active", on);
         s.setAttribute("aria-selected", on ? "true" : "false");
-        if (on && !reduce) restartFill(s);
+        /* roving tabindex: só o passo ativo fica no fluxo do Tab, mesmo
+           padrão das abas do ranking */
+        s.tabIndex = on ? 0 : -1;
+        if (on && !manual) restartFill(s);
       });
       screens.forEach(function (sc, idx) { sc.hidden = idx !== current; });
-      if (fromUser) resetTimer();
     }
 
-    function next() { activate(current + 1, false); }
+    function next() { activate(current + 1); }
 
-    function resetTimer() {
+    function agenda() {
       if (timer) { clearInterval(timer); timer = null; }
-      if (!reduce && inView) timer = setInterval(next, interval);
+      if (!manual && inView) timer = setInterval(next, interval);
     }
+
+    /* WCAG 2.2.2: qualquer interação encerra o autoplay de vez, não apenas
+       pausa. mouseenter sozinho nunca dispara em toque nem em teclado. */
+    function encerraAutoplay() {
+      if (manual) return;
+      manual = true;
+      if (timer) { clearInterval(timer); timer = null; }
+      flow.classList.add("is-manual");
+    }
+
+    if (manual) flow.classList.add("is-manual");
 
     steps.forEach(function (s, i) {
-      s.addEventListener("click", function () { activate(i, true); });
+      s.addEventListener("click", function () { encerraAutoplay(); activate(i); });
       s.addEventListener("keydown", function (e) {
-        if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); steps[(i + 1) % steps.length].focus(); activate(i + 1, true); }
-        if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); steps[(i - 1 + steps.length) % steps.length].focus(); activate(i - 1, true); }
+        var alvo = null;
+        if (e.key === "ArrowDown" || e.key === "ArrowRight") alvo = i + 1;
+        else if (e.key === "ArrowUp" || e.key === "ArrowLeft") alvo = i - 1;
+        else if (e.key === "Home") alvo = 0;
+        else if (e.key === "End") alvo = steps.length - 1;
+        if (alvo === null) return;
+        e.preventDefault();
+        encerraAutoplay();
+        activate(alvo);
+        steps[(alvo + steps.length) % steps.length].focus();
       });
     });
 
+    flow.addEventListener("focusin", encerraAutoplay);
     flow.addEventListener("mouseenter", function () { if (timer) { clearInterval(timer); timer = null; } });
-    flow.addEventListener("mouseleave", resetTimer);
+    flow.addEventListener("mouseleave", agenda);
 
     /* só roda o autoplay quando a seção está visível */
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           inView = en.isIntersecting;
-          if (inView) { if (!reduce) restartFill(steps[current]); resetTimer(); }
+          if (inView) { if (!manual) restartFill(steps[current]); agenda(); }
           else if (timer) { clearInterval(timer); timer = null; }
         });
       }, { threshold: 0.4 }).observe(flow);
-    } else { inView = true; resetTimer(); }
+    } else { inView = true; agenda(); }
 
-    activate(0, false);
+    activate(0);
   })();
 
   /* ---------- Ranking: abas Jogadores / Times ---------- */

@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Marca o documento antes da primeira pintura: só com JS vivo o conteúdo
+     nasce invisível para a animação de reveal. Sem isto, uma falha de script
+     deixaria o h1 e os dois formulários em opacity 0 para sempre. -->
+<script>document.documentElement.className += " js";</script>
 <title>PRAUS — Skill-based matchmaking. Jogue valendo.</title>
 <meta name="description" content="A PRAUS é a infraestrutura de skill-based matchmaking do Brasil. Escolhe o jogo, encontra rival do seu nível, dispute o pote e recebe no PIX. Garanta seu acesso ao beta." />
 <meta name="theme-color" content="#14110F" />
@@ -16,14 +20,19 @@
 <meta property="og:title" content="PRAUS — Jogue valendo." />
 <meta property="og:description" content="Skill-based matchmaking brasileiro. Sua habilidade vira dinheiro, com árbitro ao vivo, escrow e PIX." />
 <meta property="og:type" content="website" />
+<meta property="og:image" content="assets/video/teaser-poster.jpg" />
+<meta property="og:image:alt" content="PRAUS — skill-based matchmaking brasileiro" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+<a href="#conteudo" class="skip">Pular para o conteúdo</a>
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
@@ -43,17 +52,19 @@
   </div>
 </header>
 
-<main>
+<main id="conteudo">
 
 <!-- ============ 1. HERÓI (vídeo de fundo, sem fosco) ============ -->
+<!-- Os vídeos entram por data-src: quem decide se, e quais, carregar é o
+     script.js — hero-2 tem 17,8 MB e não desce para tela estreita, e nenhum
+     dos dois é baixado sob prefers-reduced-motion. Sem autoplay no markup,
+     senão o navegador baixa antes de qualquer decisão. -->
 <section class="hero">
   <div class="hero__bg" aria-hidden="true">
-    <video class="hero__vid hero__vid--a" autoplay muted loop playsinline preload="auto">
-      <source src="assets/video/hero-1.mp4" type="video/mp4" />
-    </video>
-    <video class="hero__vid hero__vid--b" autoplay muted loop playsinline preload="auto">
-      <source src="assets/video/hero-2.mp4" type="video/mp4" />
-    </video>
+    <video class="hero__vid hero__vid--a" muted loop playsinline preload="none"
+           data-src="assets/video/hero-1.mp4"></video>
+    <video class="hero__vid hero__vid--b" muted loop playsinline preload="none"
+           data-src="assets/video/hero-2.mp4"></video>
     <div class="hero__scrim"></div>
   </div>
 
@@ -79,7 +90,7 @@
           GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
         </button>
       </div>
-      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
+      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail. Beta restrito a maiores de 18 anos.</p>
       <p class="waitlist__success" role="status" hidden>
         Você está na fila. A gente chama quando o beta abrir pra você.
       </p>
@@ -99,52 +110,54 @@
     </header>
 
     <div class="flow reveal" data-autoplay="4800">
-      <!-- Passos (controles) -->
-      <div class="flow__steps" role="tablist" aria-label="Como funciona">
+      <!-- Passos (controles) — roving tabindex: só a aba ativa fica no fluxo
+           do Tab, mesmo padrão das abas do ranking -->
+      <div class="flow__steps" role="tablist" aria-label="Como funciona" aria-orientation="vertical">
         <button class="flow__step is-active" role="tab" aria-selected="true" aria-controls="screen-1" id="step-1" data-step="1">
           <span class="flow__step-num">01</span>
           <span class="flow__step-text">
             <span class="flow__step-tt">Escolhe o jogo e o entry fee</span>
-            <span class="flow__step-desc">Define a modalidade e quanto coloca na linha. Entra na fila e o sistema acha rival do seu nível.</span>
+            <span class="flow__step-desc"><span>Define a modalidade e quanto coloca na linha. Entra na fila e o sistema acha rival do seu nível.</span></span>
           </span>
           <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
 
-        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-2" id="step-2" data-step="2">
+        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-2" id="step-2" data-step="2" tabindex="-1">
           <span class="flow__step-num">02</span>
           <span class="flow__step-text">
             <span class="flow__step-tt">Compete com árbitro ao vivo</span>
-            <span class="flow__step-desc">A partida roda com um árbitro humano acompanhando em tempo real. Quem joga melhor leva o pote.</span>
+            <span class="flow__step-desc"><span>A partida roda com um árbitro humano acompanhando em tempo real. Quem joga melhor leva o pote.</span></span>
           </span>
           <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
 
-        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-3" id="step-3" data-step="3">
+        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-3" id="step-3" data-step="3" tabindex="-1">
           <span class="flow__step-num">03</span>
           <span class="flow__step-text">
             <span class="flow__step-tt">Recebe o prize pool no PIX</span>
-            <span class="flow__step-desc">Resultado validado, o prize pool cai na sua conta via PIX. Sem burocracia, sem espera.</span>
+            <span class="flow__step-desc"><span>Resultado validado, o prize pool cai na sua conta via PIX. Sem burocracia, sem espera.</span></span>
           </span>
           <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
       </div>
 
-      <!-- Prévia das telas -->
+      <!-- Prévia das telas. Os "chips" são <span>: ilustram um lobby, não são
+           controles — como <button> eram anunciados como cinco botões. -->
       <div class="flow__screens">
         <!-- TELA 1 — lobby / escolha -->
-        <div class="screen is-active" id="screen-1" role="tabpanel" aria-labelledby="step-1" data-screen="1">
+        <div class="screen is-active" id="screen-1" role="tabpanel" aria-labelledby="step-1" data-screen="1" tabindex="0">
           <div class="screen__bar mono-tag"><span>PRAUS · LOBBY</span><span>BR-SE</span></div>
           <div class="screen__body">
             <span class="screen__label mono-tag">MODALIDADE</span>
             <div class="chips">
-              <button class="chip chip--on" type="button" tabindex="-1">CS2</button>
-              <button class="chip" type="button" tabindex="-1">DOTA 2</button>
+              <span class="chip chip--on">CS2</span>
+              <span class="chip">DOTA 2</span>
             </div>
             <span class="screen__label mono-tag">ENTRY FEE</span>
             <div class="chips">
-              <button class="chip" type="button" tabindex="-1">R$ 25</button>
-              <button class="chip chip--on" type="button" tabindex="-1">R$ 50</button>
-              <button class="chip" type="button" tabindex="-1">R$ 100</button>
+              <span class="chip">R$ 25</span>
+              <span class="chip chip--on">R$ 50</span>
+              <span class="chip">R$ 100</span>
             </div>
             <div class="screen__row">
               <span class="screen__label mono-tag">PRIZE POOL ESTIMADO</span>
@@ -155,7 +168,7 @@
         </div>
 
         <!-- TELA 2 — partida ao vivo -->
-        <div class="screen" id="screen-2" role="tabpanel" aria-labelledby="step-2" data-screen="2" hidden>
+        <div class="screen" id="screen-2" role="tabpanel" aria-labelledby="step-2" data-screen="2" tabindex="0" hidden>
           <div class="screen__bar mono-tag"><span class="screen__live"><i></i>AO VIVO</span><span>MATCH #A8F2</span></div>
           <div class="screen__body">
             <div class="screen__score">
@@ -176,7 +189,7 @@
         </div>
 
         <!-- TELA 3 — recebido no PIX -->
-        <div class="screen" id="screen-3" role="tabpanel" aria-labelledby="step-3" data-screen="3" hidden>
+        <div class="screen" id="screen-3" role="tabpanel" aria-labelledby="step-3" data-screen="3" tabindex="0" hidden>
           <div class="screen__bar mono-tag"><span class="screen__win">● VALIDADO</span><span>MATCH #A8F2</span></div>
           <div class="screen__body screen__body--center">
             <div class="screen__check" aria-hidden="true">✓</div>
@@ -207,7 +220,7 @@
       <!-- ATIVOS -->
       <article class="game card reveal" style="--accent:#f0a020">
         <div class="game__cover">
-          <img src="assets/games/cs2.jpg" alt="Counter-Strike 2" loading="lazy" />
+          <img src="assets/games/cs2.jpg" alt="Counter-Strike 2" width="300" height="450" loading="lazy" decoding="async" />
           <span class="badge badge--live mono-tag">ATIVO</span>
         </div>
         <div class="game__meta">
@@ -218,7 +231,7 @@
 
       <article class="game card reveal" style="--accent:#c0392b">
         <div class="game__cover">
-          <img src="assets/games/dota2.jpg" alt="Dota 2" loading="lazy" />
+          <img src="assets/games/dota2.jpg" alt="Dota 2" width="300" height="450" loading="lazy" decoding="async" />
           <span class="badge badge--live mono-tag">ATIVO</span>
         </div>
         <div class="game__meta">
@@ -230,7 +243,7 @@
       <!-- EM BREVE -->
       <article class="game game--soon card reveal" style="--accent:#ff4655">
         <div class="game__cover">
-          <img src="assets/games/valorant.jpg" alt="Valorant" loading="lazy" />
+          <img src="assets/games/valorant.jpg" alt="Valorant" width="600" height="900" loading="lazy" decoding="async" />
           <span class="badge badge--soon mono-tag">EM BREVE</span>
         </div>
         <div class="game__meta">
@@ -241,7 +254,7 @@
 
       <article class="game game--soon card reveal" style="--accent:#4a90e2">
         <div class="game__cover">
-          <img src="assets/games/fortnite.jpg" alt="Fortnite" loading="lazy" />
+          <img src="assets/games/fortnite.jpg" alt="Fortnite" width="600" height="900" loading="lazy" decoding="async" />
           <span class="badge badge--soon mono-tag">EM BREVE</span>
         </div>
         <div class="game__meta">
@@ -422,7 +435,7 @@
           GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
         </button>
       </div>
-      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
+      <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail. Beta restrito a maiores de 18 anos.</p>
       <p class="waitlist__success" role="status" hidden>
         Você está na fila. A gente chama quando o beta abrir pra você.
       </p>
@@ -444,7 +457,7 @@
     <div class="faq reveal">
       <details class="faq__item">
         <summary class="faq__q">Isso é aposta?</summary>
-        <p class="faq__a">Não. A PRAUS é skill-based matchmaking: o resultado vem da sua habilidade, não da sorte. Tudo roda dentro de uma estrutura legal completa, com regras claras e arbitragem em cada partida.</p>
+        <p class="faq__a">Não. A PRAUS é skill-based matchmaking: o resultado vem da sua habilidade, não da sorte. As regras são públicas e cada partida tem arbitragem humana. O enquadramento regulatório está em consolidação — os documentos estão publicados como <a class="faq__link" href="regras.html">minuta</a>, e você pode ler antes de entrar na fila.</p>
       </details>
       <details class="faq__item">
         <summary class="faq__q">É seguro colocar dinheiro?</summary>
@@ -488,14 +501,13 @@
       <p class="footer__tagline mono-tag">PRESS START. PLAY PRAUS.</p>
     </div>
     <nav class="footer__links" aria-label="Documentos">
-      <a href="#" class="footer__link">Termos de Uso</a>
-      <a href="#" class="footer__link">Regras da Plataforma</a>
-      <a href="#" class="footer__link">Política de Privacidade</a>
+      <a href="termos.html" class="footer__link">Termos de Uso</a>
+      <a href="regras.html" class="footer__link">Regras da Plataforma</a>
+      <a href="privacidade.html" class="footer__link">Política de Privacidade</a>
     </nav>
     <p class="footer__note">
       Documentos disponibilizados como minuta em consolidação — versões em
-      ajuste, não finais. Jogo responsável · idade mínima conforme
-      regulamento em consolidação.
+      ajuste, não finais. Jogo responsável · beta restrito a maiores de 18 anos.
     </p>
     <p class="footer__copy mono-tag">© 2026 PRAUS · SKILL-BASED MATCHMAKING · BRASIL</p>
   </div>
